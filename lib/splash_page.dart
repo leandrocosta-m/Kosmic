@@ -13,9 +13,10 @@ class SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-
+    //delay de apresentação da tela com logo
     Future.delayed(const Duration(seconds: 3), () {
-      //Navigator.pushReplacementNamed(context, '/login');
+      //adicionado transição de 3 segundos antes de ir para a tela de login
+      Navigator.pushReplacementNamed(context, '/login');
     });
   }
 
@@ -24,7 +25,8 @@ class SplashPageState extends State<SplashPage> {
     return Scaffold(
       body: GestureDetector(
         onTap: () {
-          //Navigator.pushReplacementNamed(context, '/login');
+          //caso não queira esperar 3 segundos pode clicar na tela que ira encaminhar para a tela de login
+          Navigator.pushReplacementNamed(context, '/login');
         },
         child: Stack(
           children: [
@@ -60,6 +62,21 @@ class SplashPageState extends State<SplashPage> {
                       image: DecorationImage(
                         image: AssetImage(
                           'lib/assets/images/splash/logo.png',
+                        ),
+                      ),
+                    ),
+                  ),
+                  //adicionamos um circulo mais fino atras da imagem ellipse.png
+                  Positioned(
+                    bottom: 20, //ajustando na posição vertical
+                    child: Container(
+                      width: 280,
+                      height: 280,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Colors.white,
+                          width: 1,
                         ),
                       ),
                     ),
