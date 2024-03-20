@@ -1,8 +1,7 @@
-//import 'package:cosmic/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:kosmic/login_page.dart';
+import 'package:kosmic/socialmedia/forgotpassword_page.dart';
 import 'splash_page.dart';
-//import 'home_page.dart';
 
 class AppWidget extends StatelessWidget {
   const AppWidget({super.key});
@@ -19,6 +18,8 @@ class AppWidget extends StatelessWidget {
       routes: {
         '/': (context) => const SplashPage(),
         '/login': (context) => const LoginPage(),
+        '/login_pass': (context) =>
+            const ForgotPasswordPage(), //adicionado caminho da nova pagina
         //'/home': (context) => const HomePage(),
       },
     );

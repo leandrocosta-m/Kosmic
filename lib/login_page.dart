@@ -137,7 +137,8 @@ class LoginPageState extends State<LoginPage> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              //ação
+                              Navigator.of(context)
+                                  .pushReplacementNamed('/login_pass');
                             },
                             child: const Text(
                               'Forgot Password?',
@@ -213,6 +214,7 @@ class LoginPageState extends State<LoginPage> {
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -223,7 +225,150 @@ class LoginPageState extends State<LoginPage> {
             top: 540 + 44 + 20,
             left: 0,
             right: 0,
-            child: Row(),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(left: 5),
+                  height: 0.1,
+                  width: 70,
+                  color: Colors.grey,
+                ),
+                const SizedBox(width: 1),
+                const Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 4,
+                  ),
+                  child: Text(
+                    'or Sign In using',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 1,
+                ),
+                Container(
+                  margin: const EdgeInsets.only(
+                    left: 5,
+                  ),
+                  height: 0.1,
+                  width: 70,
+                  color: Colors.grey,
+                ),
+              ],
+            ),
+          ),
+          //cria um circulo preto na imagem twitter e adiciona a imagem
+          Positioned(
+            left: 80,
+            bottom: 90,
+            child: Container(
+              width: 50,
+              height: 50,
+              decoration: const BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black,
+                    blurRadius: 14.0,
+                  ),
+                ],
+                shape: BoxShape.circle,
+                color: Color(0xff111010),
+              ),
+              child: const Center(
+                child: Image(
+                  width: 40,
+                  height: 40,
+                  image: AssetImage(
+                    'lib/assets/images/login/x.png',
+                  ),
+                ),
+              ),
+            ),
+          ),
+          //configuração para o facebook
+          Positioned(
+            left: 160,
+            bottom: 90,
+            child: Container(
+              decoration: const BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black,
+                    blurRadius: 15.0,
+                  ),
+                ],
+                shape: BoxShape.circle,
+                color: Color(0xff111010),
+              ),
+              child: const Center(
+                child: Image(
+                  width: 50,
+                  height: 50,
+                  image: AssetImage(
+                    'lib/assets/images/login/face.png',
+                  ),
+                ),
+              ),
+            ),
+          ),
+          //confriguração para o gmail
+          Positioned(
+            right: 80,
+            bottom: 90,
+            child: Container(
+              decoration: const BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black,
+                    blurRadius: 15.0,
+                  ),
+                ],
+                shape: BoxShape.circle,
+                color: Color(0xff111010),
+              ),
+              child: const Center(
+                child: Image(
+                  width: 50,
+                  height: 50,
+                  image: AssetImage(
+                    'lib/assets/images/login/google.png',
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(
+            width: 1,
+          ),
+          //texto 'dont have an account'
+          Positioned(
+            left: 80,
+            bottom: 40,
+            child: RichText(
+              text: const TextSpan(
+                children: [
+                  TextSpan(
+                    text: "Don't have an account? ",
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  TextSpan(
+                    text: 'Sign In',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFF11DCE8),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),

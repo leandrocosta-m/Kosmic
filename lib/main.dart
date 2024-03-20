@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'app_widget.dart';
 import 'splash_page.dart';
+//import 'login_page.dart';
 
 main() {
   runApp(const AppWidget());
