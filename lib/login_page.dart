@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,6 +12,46 @@ class LoginPageState extends State<LoginPage> {
   String email = 'admin';
   String senha = '123';
   double forgotPasswordOffset = 10.0;
+
+  Future<void> _handleLogin() async {
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+
+    //final String email = emailController.text;
+    email = emailController.text;
+    final String password = passwordController.text;
+
+    // Autenticação do Firebase
+    /*final UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );*/
+
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      // Check if login was successful
+      if (userCredential.user!.uid.isNotEmpty) {
+        // Login successful! Proceed with further actions
+        // ... (your code to handle successful login)
+      }
+    } on FirebaseAuthException catch (e) {
+      // Handle specific Firebase authentication errors
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.message?.toString() ?? 'Unknown error'),
+        ),
+      );
+    }
+
+    // Crie userRef dinamicamente com base no email do usuário
+    //final userRef = database.ref().child("usuarios").child(email);
+  }
 
   Widget _body() {
     return Container(
@@ -160,7 +201,7 @@ class LoginPageState extends State<LoginPage> {
             top: 320,
             left: 30,
             child: Text(
-              'Sign In',
+              'Login',
               style: TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
@@ -202,6 +243,7 @@ class LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   onPressed: () {
+                    _handleLogin();
                     if (email == 'admin' && senha == '123') {
                       Navigator.of(context).pushReplacementNamed('/home');
                     } else {
@@ -209,7 +251,7 @@ class LoginPageState extends State<LoginPage> {
                     }
                   },
                   child: const Text(
-                    'Sign In',
+                    'Login',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20,

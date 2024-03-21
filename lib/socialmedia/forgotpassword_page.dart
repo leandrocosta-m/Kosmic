@@ -1,8 +1,8 @@
-// ignore_for_file: library_private_types_in_public_api, prefer_const_constructors
+// ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 import 'package:kosmic/login_page.dart';
-//import 'package:kosmic/login_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({Key? key}) : super(key: key);
@@ -14,11 +14,20 @@ class ForgotPasswordPage extends StatefulWidget {
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   String email = '';
 
+  Future<void> _resetPassword() async {
+    try {
+      final auth = FirebaseAuth.instance;
+      await auth.sendPasswordResetEmail(email: email);
+      // Show success message to the user
+    } on FirebaseAuthException {
+      // Handle errors (e.g., invalid email, network issues)
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //title: const Text(''),
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: Stack(
@@ -68,7 +77,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              //centraliado campo de email
+              //centralizando campo de email
               const SizedBox(height: 250),
               Center(
                 child: TextField(
@@ -123,6 +132,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     ),
                   ),
                   onPressed: () {
+                    _resetPassword();
                     //adicionar a logica depois
                   },
                   child: const Text(
