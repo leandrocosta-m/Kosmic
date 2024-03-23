@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:kosmic/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+//import 'package:flutter_test/flutter_test.dart';
+
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({Key? key}) : super(key: key);
 
@@ -12,15 +14,60 @@ class ForgotPasswordPage extends StatefulWidget {
 }
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
-  String email = '';
-
-  Future<void> _resetPassword() async {
+  final _emailController = TextEditingController();
+  /*
+  Future<void> _resetPassword(BuildContext context) async {
     try {
       final auth = FirebaseAuth.instance;
-      await auth.sendPasswordResetEmail(email: email);
-      // Show success message to the user
-    } on FirebaseAuthException {
-      // Handle errors (e.g., invalid email, network issues)
+      await auth.sendPasswordResetEmail(email: _emailController.text.trim()); //
+
+      //await auth.sendPasswordResetEmail(email: 'email enviado com sucesso!');
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Email de recuperação enviado com sucesso!'),
+        ),
+      );
+    } on FirebaseAuthException catch (e) {
+      String message = 'Erro ao redefinir senha.';
+      switch (e.code) {
+        case 'user-not-found':
+          message = 'Usuario não encontrado. Verifique o email digitado.';
+          break;
+
+        case 'too-many-request':
+          message =
+              'Muitas tentativas de redefinição de senha. Tente novamente mais tarde!';
+          break;
+
+        default:
+          message = 'Erro desconhecido. Tente novamente mais tarde!';
+          break;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+        ),
+      );
+    }
+  }*/
+
+  Future<void> _resetPassword(BuildContext context) async {
+    try {
+      final auth = FirebaseAuth.instance;
+      await auth.sendPasswordResetEmail(email: _emailController.text.trim());
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Email enviado com sucesso.'),
+        ),
+      );
+    } catch (e) {
+      print("Erro: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Erro'),
+        ),
+      );
     }
   }
 
@@ -81,12 +128,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               const SizedBox(height: 250),
               Center(
                 child: TextField(
-                  onChanged: (text) {
-                    setState(() {
-                      email = text;
-                    });
-                  },
+                  controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
+                  /*onChanged: (text) {
+                    setState(() {
+                      _email = text;
+                    });
+                  },*/
                   style: const TextStyle(
                     color: Colors.white,
                   ),
@@ -131,9 +179,25 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       borderRadius: BorderRadius.circular(30.0),
                     ),
                   ),
-                  onPressed: () {
-                    _resetPassword();
+                  /*
+                  onPressed: () async {
+                    await _resetPassword(context);
                     //adicionar a logica depois
+                  },*/
+                  onPressed: () async {
+                    try {
+                      await _resetPassword(context);
+                    } on FirebaseAuthException catch (e) {
+                      String message = 'Erro ao redefinir senha.';
+                      switch (e.code) {
+                        //tratar mensagem
+                      }
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(message),
+                        ),
+                      );
+                    }
                   },
                   child: const Text(
                     'Reset Password',
